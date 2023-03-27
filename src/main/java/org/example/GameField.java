@@ -39,6 +39,10 @@ public class GameField extends JPanel implements ActionListener {
          for (int i = 0; i< dots; i++) {
              x[i] = 150;
              y[i] = 150;
+             right = true;
+             left = false;
+             up = false;
+             down = false;
          }
          timer = new Timer(250,this);
          timer.start();
