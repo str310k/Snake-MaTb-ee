@@ -33,7 +33,6 @@ public class GameField extends JPanel implements ActionListener {
          setFocusable(true);
     }
 
-
     public void InitGame() {
          dots = 3;
          for (int i = 0; i< dots; i++) {
@@ -48,10 +47,12 @@ public class GameField extends JPanel implements ActionListener {
          timer.start();
          createApple();
     }
+
         public void createApple() {
          appleX = new Random().nextInt(10)*DOT_SIZE;
          appleY = new Random().nextInt(10)*DOT_SIZE;
     }
+
     public void LoadImages() {
          ImageIcon iiApple = new ImageIcon("Apple.png");
          apple = iiApple.getImage();
@@ -165,4 +166,3 @@ public class GameField extends JPanel implements ActionListener {
         }
      }
 }
-
