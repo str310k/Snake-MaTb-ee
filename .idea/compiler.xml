@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Snake" options="--add-exports java.desktop/sun.java2d.d3d=ALL-UNNAMED" />
+      <module name="Snake" options="" />
     </option>
   </component>
 </project>
