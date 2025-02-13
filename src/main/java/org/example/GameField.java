@@ -23,6 +23,9 @@ public class GameField extends JPanel implements ActionListener {
     private boolean up = false;
     private boolean down = false;
     private boolean inGame = true;
+    private boolean boundlessGame = true;
+    private int score = 0;
+    private int bestScore = 0;
 
      public GameField() {
 
@@ -64,9 +67,25 @@ public class GameField extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(inGame){
+            String scr = "Счёт:";
+            Font f = new Font("Arial", Font.BOLD, 35);
+            g.setColor(Color.white);
+            g.setFont(f);
+            g.drawString(scr,550,50);
+
+            String bstSqr = "Лучш:";
+            g.setColor(Color.white);
+            g.setFont(f);
+            g.drawString(bstSqr,550,100);
+
             g.drawImage(apple,appleX,appleY,this);
             for (int i = 0; i < dots; i++) {
                 g.drawImage(dot,x[i],y[i],this);
+                g.drawString(String.valueOf(score), 700, 50);
+                if (score >= bestScore){
+                    bestScore = score;
+                }
+                g.drawString(String.valueOf(bestScore), 700, 100);
             }
         }       else {
             String str = "Похер";
@@ -98,31 +117,46 @@ public class GameField extends JPanel implements ActionListener {
 
     public void checkApple(){
          if (x[0] == appleX && y[0] == appleY){
+             score = score +5;
              dots++;
              createApple();
          }
     }
 
     public void checkCollisions() {
-        for (int i = dots; i > 0 ; i--) {
-            if(i>4 && x[0] == x[i] && y[0] == y[i]) {
+        for (int i = dots; i > 0; i--) {
+            if (i > 4 && x[0] == x[i] && y[0] == y[i]) {
                 inGame = false;
             }
-            if(x[0] > SIZE){
-                inGame = false;
-            }
-            if(x[0] < 0){
-                inGame = false;
-            }
-            if(y[0] == SIZE){
-                inGame = false;
-            }
-            if(y[0] < 0){
-                inGame = false;
+            if (boundlessGame) {
+                if (x[0] > SIZE) {
+                    x[0] = 0;
+                }
+                if (x[0] < 0) {
+                    x[0] = SIZE;
+                }
+                if (y[0] > SIZE) {
+                    y[0] = 0;
+                }
+                if (y[0] < 0) {
+                    y[0] = SIZE;
+                }
+            } else {
+                if (x[0] > SIZE) {
+                    inGame = false;
+                }
+                if (x[0] < 0) {
+                    inGame = false;
+                }
+                if (y[0] > SIZE) {
+                    inGame = false;
+                }
+                if (y[0] < 0) {
+                    inGame = false;
+                }
             }
         }
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(inGame) {
@@ -159,9 +193,13 @@ public class GameField extends JPanel implements ActionListener {
                 right = false;
             }
             if (key == KeyEvent.VK_ENTER) {
+                score = 0;
                 timer.stop();
                 InitGame();
                 inGame = true;
+            }
+            if (key == KeyEvent.VK_F){
+                boundlessGame = !boundlessGame;
             }
         }
      }
